@@ -5,7 +5,7 @@ if "%CONFIG%"=="" (
     set CONFIG=Release
 )
 
-set EXE=build\bin\%CONFIG%\onnx_gpu_demo.exe
+set EXE=build\bin\%CONFIG%\onnx_cpu_demo.exe
 
 if exist %EXE% (
     echo Running %EXE%...

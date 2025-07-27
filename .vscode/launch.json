@@ -1,12 +1,16 @@
 {
-    "configurations": [
-        {
-            "type": "cmake",
-            "request": "launch",
-            "name": "Debug portfile(s)",
-            "cmakeDebugType": "external",
-            "pipeName": "\\\\.\\pipe\\vcpkg_ext_portfile_dbg",
-            "preLaunchTask": "Debug vcpkg commands"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch onnx_cpu_demo",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}\\build\\bin\\Debug\\onnx_cpu_demo.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}\\build\\bin\\Debug",
+      "environment": [],
+      "externalConsole": true,
+    }
+  ]
 }

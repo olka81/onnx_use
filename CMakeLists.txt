@@ -12,7 +12,7 @@ set(ORT_EXTRACT_DIR "${CMAKE_SOURCE_DIR}/third_party/onnxruntime-win-x64-${ORT_V
 
 # Скачать архив, если он ещё не загружен
 if(NOT EXISTS "${ORT_LOCAL_ZIP}")
-    message(STATUS "📥 Downloading ONNX Runtime ${ORT_VERSION}...")
+    message(STATUS "Downloading ONNX Runtime ${ORT_VERSION}...")
     file(DOWNLOAD
         "${ORT_URL}"
         "${ORT_LOCAL_ZIP}"
@@ -22,7 +22,7 @@ endif()
 
 # Распаковать, если не распаковано
 if(NOT EXISTS "${ORT_EXTRACT_DIR}/include")
-    message(STATUS "📦 Extracting ONNX Runtime...")
+    message(STATUS "Extracting ONNX Runtime...")
     file(MAKE_DIRECTORY "${CMAKE_SOURCE_DIR}/third_party")
     execute_process(
         COMMAND ${CMAKE_COMMAND} -E tar xf "${ORT_LOCAL_ZIP}"
@@ -50,5 +50,11 @@ add_custom_command(TARGET onnx_cpu_demo POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ORT_EXTRACT_DIR}/lib/onnxruntime.dll"
         "$<TARGET_FILE_DIR:onnx_cpu_demo>"
-    COMMENT "📦 Copying onnxruntime.dll to output directory"
+    COMMENT "Copying onnxruntime.dll to output directory"
+)
+add_custom_command(TARGET onnx_cpu_demo POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/third_party/mnist-8.onnx"
+        "$<TARGET_FILE_DIR:onnx_cpu_demo>/model-8.onnx"
+    COMMENT "Copying ONNX model to output directory"
 )

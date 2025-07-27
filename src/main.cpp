@@ -1,9 +1,13 @@
 #include <onnxruntime_cxx_api.h>
 #include <iostream>
 
-// #ifndef MODEL_PATH
-// #define MODEL_PATH "build/bin/Debug/model-8.onnx"
-// #endif
+#ifndef MODEL_PATH
+#ifdef _DEBUG
+    #define MODEL_PATH L"build/bin/Debug/model-8.onnx";
+#else
+    #define MODEL_PATH L"build/bin/Release/model-8.onnx";
+#endif
+#endif
 
 int main() {
     std::wcout << L"Compiled against ORT API version: " << ORT_API_VERSION << std::endl;

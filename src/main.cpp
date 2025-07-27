@@ -1,8 +1,11 @@
 #include <onnxruntime_cxx_api.h>
 #include <iostream>
 
-int main() {
+// #ifndef MODEL_PATH
+// #define MODEL_PATH "build/bin/Debug/model-8.onnx"
+// #endif
 
+int main() {
     std::wcout << L"Compiled against ORT API version: " << ORT_API_VERSION << std::endl;
 
     Ort::Env env{ORT_LOGGING_LEVEL_WARNING, "demo"};
@@ -11,9 +14,16 @@ int main() {
     session_options.SetIntraOpNumThreads(1);
     session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_ALL);
 
-    std::wstring model_path = L"model-8.onnx";
-    Ort::Session session(env, model_path.c_str(), session_options);
+    std::wstring model_path = L"" MODEL_PATH;
+    std::wcout << L"Model path: " << model_path << std::endl;
 
-    std::wcout << L"Model loaded successfully." << std::endl;
+    try {
+        Ort::Session session(env, model_path.c_str(), session_options);
+        std::wcout << L"Model loaded successfully." << std::endl;
+    } catch (const Ort::Exception& e) {
+        std::wcerr << L"ORT Exception: " << e.what() << std::endl;
+        return 1;
+    }
+
     return 0;
 }

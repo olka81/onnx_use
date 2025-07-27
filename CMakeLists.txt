@@ -38,6 +38,17 @@ link_directories("${ORT_EXTRACT_DIR}/lib")
 add_executable(onnx_cpu_demo src/main.cpp)
 target_link_libraries(onnx_cpu_demo onnxruntime)
 
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
+    set(MODEL_PATH_${OUTPUTCONFIG_UPPER} "${CMAKE_BINARY_DIR}/bin/${OUTPUTCONFIG}/model-8.onnx")
+endforeach()
+
+# Передать макрос в компилятор
+target_compile_definitions(onnx_cpu_demo PRIVATE
+    $<$<CONFIG:Debug>:MODEL_PATH=\"${MODEL_PATH_DEBUG}\">
+    $<$<CONFIG:Release>:MODEL_PATH=\"${MODEL_PATH_RELEASE}\">
+)
+
 # Выходной путь
 set_target_properties(onnx_cpu_demo PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin

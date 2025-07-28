@@ -35,7 +35,9 @@ include_directories("${ORT_EXTRACT_DIR}/include")
 link_directories("${ORT_EXTRACT_DIR}/lib")
 
 # Скомпилировать основной исполняемый файл
-add_executable(onnx_cpu_demo src/main.cpp)
+add_executable(onnx_cpu_demo 
+    src/main.cpp
+    src/onnx_classifier.cpp)
 target_link_libraries(onnx_cpu_demo onnxruntime)
 
 foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})

@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 include(FetchContent)
 
+find_package(OpenCV REQUIRED)
+
 set(ORT_VERSION "1.19.0")
 set(ORT_ARCHIVE_NAME "onnxruntime-win-x64-${ORT_VERSION}.zip")
 set(ORT_URL "https://github.com/microsoft/onnxruntime/releases/download/v${ORT_VERSION}/${ORT_ARCHIVE_NAME}")
@@ -37,19 +39,11 @@ link_directories("${ORT_EXTRACT_DIR}/lib")
 # Скомпилировать основной исполняемый файл
 add_executable(onnx_cpu_demo 
     src/main.cpp
-    src/onnx_classifier.cpp)
-target_link_libraries(onnx_cpu_demo onnxruntime)
+    src/onnx_classifier.cpp
+    src/image_preprocessor.cpp)
+target_link_libraries(onnx_cpu_demo onnxruntime ${OpenCV_LIBS})
 
-foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set(MODEL_PATH_${OUTPUTCONFIG_UPPER} "${CMAKE_BINARY_DIR}/bin/${OUTPUTCONFIG}/model-8.onnx")
-endforeach()
-
-# Передать макрос в компилятор
-target_compile_definitions(onnx_cpu_demo PRIVATE
-    $<$<CONFIG:Debug>:MODEL_PATH=\"${MODEL_PATH_DEBUG}\">
-    $<$<CONFIG:Release>:MODEL_PATH=\"${MODEL_PATH_RELEASE}\">
-)
+target_include_directories(onnx_cpu_demo PRIVATE ${OpenCV_INCLUDE_DIRS})
 
 # Выходной путь
 set_target_properties(onnx_cpu_demo PROPERTIES

@@ -12,6 +12,7 @@ public:
     bool load(const std::wstring& model_path);
     std::vector<float> run(const std::vector<float>& input_tensor);
     std::vector<int64_t> getInputShape() const;
+    int predict(const std::vector<float>& input_tensor_data);
 
 private:
     Ort::Env env;

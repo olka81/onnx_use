@@ -30,6 +30,19 @@ std::vector<int64_t> OnnxClassifier::getInputShape() const {
     return input_shape;
 }
 
+int OnnxClassifier::predict(const std::vector<float> &input_tensor_data)
+{
+    std::vector<float> output = run(input_tensor_data);
+
+    if (output.empty()) {
+        std::wcerr << L"Prediction failed: empty output" << std::endl;
+        return -1; // сигнал ошибки
+    }
+
+    auto max_iter = std::max_element(output.begin(), output.end());
+    return static_cast<int>(std::distance(output.begin(), max_iter));
+}
+
 std::vector<float> OnnxClassifier::run(const std::vector<float>& input_tensor_data) {
     Ort::MemoryInfo memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
 

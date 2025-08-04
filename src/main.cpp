@@ -45,8 +45,22 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    int predicted_digit = classifier.predict(input_tensor);
-    std::wcout << L"Predicted digit: " << predicted_digit << std::endl;
+    //int predicted_digit = classifier.predict(input_tensor);
+    //std::wcout << L"Predicted digit: " << predicted_digit << std::endl;
+
+    auto top_predictions = classifier.predict_top_k(input_tensor, 3);
+
+    if (!top_predictions.empty()) {
+        std::wcout << L"Predicted digit: " << top_predictions[0].first
+               << L" (" << top_predictions[0].second * 100.0f << L"%)" << std::endl;
+
+        std::wcout << L"Top 3 predictions:\n";
+        for (const auto& [label, prob] : top_predictions) {
+            std::wcout << L"  " << label << L": " << prob * 100.0f << L"%\n";
+        }
+    } else {
+        std::wcerr << L"Prediction failed." << std::endl;
+    }
 
     return 0;
 }

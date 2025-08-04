@@ -13,6 +13,7 @@ public:
     std::vector<float> run(const std::vector<float>& input_tensor);
     std::vector<int64_t> getInputShape() const;
     int predict(const std::vector<float>& input_tensor_data);
+    std::vector<std::pair<int, float>> predict_top_k(const std::vector<float>& input_tensor_data, int k);
 
 private:
     Ort::Env env;
@@ -24,4 +25,6 @@ private:
     std::optional<Ort::AllocatedStringPtr> output_name_holder;
 
     std::vector<int64_t> input_shape;
+
+    static std::vector<float> apply_softmax(const std::vector<float>& logits);
 };

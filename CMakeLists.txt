@@ -65,4 +65,12 @@ add_custom_command(TARGET onnx_cpu_demo POST_BUILD
         "${CMAKE_SOURCE_DIR}/third_party/mnist-8.onnx"
         "$<TARGET_FILE_DIR:onnx_cpu_demo>/model-8.onnx"
     COMMENT "Copying ONNX model to output directory"
+
+# gpt2_tokenizer
+add_custom_command(TARGET onnx_cpu_demo POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/third_party/gpt2_tokenizer"
+        "$<TARGET_FILE_DIR:onnx_cpu_demo>/gpt2_tokenizer"
+    COMMENT "Copying GPT2 tokenizer to output directory"
+)
 )

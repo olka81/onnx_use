@@ -65,6 +65,9 @@
         "forward_list": "cpp",
         "iomanip": "cpp",
         "ratio": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "fstream": "cpp",
+        "map": "cpp",
+        "xtree": "cpp"
     }
 }

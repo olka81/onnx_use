@@ -41,7 +41,7 @@ add_executable(onnx_cpu_demo
     src/main.cpp
     src/onnx_classifier.cpp
     src/image_preprocessor.cpp
-    src/text_generator.cpp)
+    src/gpt2_generator.cpp)
 target_link_libraries(onnx_cpu_demo onnxruntime ${OpenCV_LIBS})
 
 target_include_directories(onnx_cpu_demo PRIVATE ${OpenCV_INCLUDE_DIRS})

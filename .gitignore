@@ -7,3 +7,4 @@ third_party/
 *.log
 *.user
 input_ids.txt
+attention_mask.txt

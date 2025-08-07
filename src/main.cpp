@@ -48,7 +48,8 @@ int main(int argc, char* argv[]) {
 
     int predicted_digit = classifier.predict(input_tensor);
 
-    TextGenerator generator;
+    std::wstring gpt2_model_path = exe_dir + L"\\gpt2.onnx";
+    TextGenerator generator(gpt2_model_path);
     std::wcout << generator.generate(predicted_digit) << std::endl;
 
     // auto top_predictions = classifier.predict_top_k(input_tensor, 3);

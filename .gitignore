@@ -6,3 +6,4 @@ third_party/
 *.exe
 *.log
 *.user
+input_ids.txt

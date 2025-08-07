@@ -53,24 +53,18 @@ set_target_properties(onnx_cpu_demo PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/bin/Debug
 )
 
-# Копировать DLL рядом с .exe после сборки
 add_custom_command(TARGET onnx_cpu_demo POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ORT_EXTRACT_DIR}/lib/onnxruntime.dll"
         "$<TARGET_FILE_DIR:onnx_cpu_demo>"
-    COMMENT "Copying onnxruntime.dll to output directory"
-)
-add_custom_command(TARGET onnx_cpu_demo POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${CMAKE_SOURCE_DIR}/third_party/mnist-8.onnx"
         "$<TARGET_FILE_DIR:onnx_cpu_demo>/model-8.onnx"
-    COMMENT "Copying ONNX model to output directory"
-
-# gpt2_tokenizer
-add_custom_command(TARGET onnx_cpu_demo POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/third_party/gpt2.onnx"
+        "$<TARGET_FILE_DIR:onnx_cpu_demo>/gpt2.onnx"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/third_party/gpt2_tokenizer"
         "$<TARGET_FILE_DIR:onnx_cpu_demo>/gpt2_tokenizer"
-    COMMENT "Copying GPT2 tokenizer to output directory"
-)
+    COMMENT "Copying dependencies to output directory"
 )
